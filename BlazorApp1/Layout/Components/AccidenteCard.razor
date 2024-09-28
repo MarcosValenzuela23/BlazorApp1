@@ -1,0 +1,48 @@
+﻿namespace BlazorApp1.Layout.Components
+{
+    public class AccidenteCard
+    {
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Accidente.Fecha</h5>
+        <p class="card-text">@Accidente.Descripcion</p>
+        <button @onclick="OnEdit">Editar</button>
+        <button @onclick="OnDelete">Eliminar</button>
+    </div>
+</div>
+@page "/accidentes"
+@using BlazorApp1.Layout.Models
+@inject AccidenteService AccidenteService
+
+<h3>Lista de Accidentes</h3>
+@foreach (var accidente in accidentes)
+{
+    <AccidenteCard Accidente="accidente" OnEdit="EditAccidente" OnDelete="DeleteAccidente" />
+}
+
+@code {
+	private List<Accidente> accidentes;
+
+	protected override async Task OnInitializedAsync()
+	{
+		accidentes = await AccidenteService.GetAccidentesAsync();
+	}
+
+	private void EditAccidente(Accidente accidente)
+	{
+		// Lógica para editar el accidente
+	}
+
+	private void DeleteAccidente(Accidente accidente)
+	{
+		// Lógica para eliminar el accidente
+	}
+	private void OnDelete(MouseEventArgs e)
+	{
+		throw new NotImplementedException();
+	}
+	private void OnEdit(MouseEventArgs e)
+	{
+		throw new NotImplementedException();
+	}
+}

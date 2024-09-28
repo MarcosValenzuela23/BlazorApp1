@@ -1,0 +1,48 @@
+﻿namespace BlazorApp1.Layout.Components
+{
+    public class AccidenteForm
+    {
+        @page "/accidente-form"
+@using BlazorApp1.Layout.Models
+@inject AccidenteService AccidenteService
+
+<EditForm Model="accidente" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Fecha del Accidente:</label>
+        <InputDate @bind-Value="accidente.Fecha" />
+    </div>
+    <div>
+        <label>Descripción:</label>
+        <InputTextArea @bind-Value="accidente.Descripcion" />
+    </div>
+    <div>
+        <label>Costo Económico:</label>
+        <InputNumber @bind-Value="accidente.CostoEconomico" />
+    </div>
+    <div>
+        <label>Número de Muertos:</label>
+        <InputNumber @bind-Value="accidente.NumeroMuertos" />
+    </div>
+    <div>
+        <label>Número de Heridos:</label>
+        <InputNumber @bind-Value="accidente.NumeroHeridos" />
+    </div>
+    <div>
+        <label>Cantidad de Vehículos:</label>
+        <InputNumber @bind-Value="accidente.CantidadVehiculos" />
+    </div>
+    <button type="submit">Guardar</button>
+</EditForm>
+
+@code {
+    private Accidente accidente = new Accidente();
+
+    private async Task HandleValidSubmit()
+    {
+        await AccidenteService.SaveAccidenteAsync(accidente);
+        accidente = new Accidente();
+    }
+}

@@ -1,0 +1,24 @@
+﻿@page "/"
+@inject AccidenteService AccidenteService
+
+<h3>Dashboard</h3>
+<div>Total de Accidentes: @totalAccidentes</div>
+<div>Total de Vehículos Involucrados: @totalVehiculos</div>
+<div>Total de Muertos: @totalMuertos</div>
+<div>Total de Heridos: @totalHeridos</div>
+
+@code {
+    private int totalAccidentes;
+    private int totalVehiculos;
+    private int totalMuertos;
+    private int totalHeridos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var accidentes = await AccidenteService.GetAccidentesAsync();
+        totalAccidentes = accidentes.Count;
+        totalVehiculos = accidentes.Sum(a => a.CantidadVehiculos);
+        totalMuertos = accidentes.Sum(a => a.NumeroMuertos);
+        totalHeridos = accidentes.Sum(a => a.NumeroHeridos);
+    }
+}
